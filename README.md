@@ -6,10 +6,17 @@ Tugas Algoritma dan Struktur Data, Pertemuan 7 (Struktur Data Record).
 Fitur: input data n mahasiswa, tampil data + status lulus (nilai >= 60),
 cari nilai tertinggi, dan hitung rata-rata.
 
+## Jalankan online (tanpa install apa pun)
+
+Buka halaman: https://gungrsyworkakun-tech.github.io/complier/
+
+Ubah kode atau data di kotak yang tersedia, lalu klik **Jalankan**.
+
 ## Struktur folder
 
 ```
 src/pendataan_mahasiswa.cpp        kode program
+docs/index.html                    halaman web untuk menjalankan kode (GitHub Pages)
 input_contoh.txt                   data contoh untuk uji otomatis
 .github/workflows/...yml           compile + jalankan otomatis di GitHub
 .devcontainer/devcontainer.json    pengaturan untuk GitHub Codespaces

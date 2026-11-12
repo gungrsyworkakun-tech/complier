@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pendataan Nilai Mahasiswa (C++) - Jalankan Online</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --ink:#1d2330; --muted:#5d6676; --line:#d9dde4; --accent:#2457d6; --accent-ink:#fff; --out:#0f1720; --out-ink:#d8f3dc; --err:#ffb4b4; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 16px 56px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  p.sub { margin: 0 0 20px; color: var(--muted); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  label { display:block; font-weight:600; margin-bottom:6px; }
+  .hint { font-weight:400; color:var(--muted); font-size:.9rem; }
+  textarea { width:100%; border:1px solid var(--line); border-radius:8px; padding:10px; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; resize: vertical; background:#fbfcfd; color:var(--ink); }
+  #code { min-height: 420px; }
+  #stdin { min-height: 130px; }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  button { font: inherit; font-weight:600; border:0; border-radius:8px; padding:10px 20px; cursor:pointer; background:var(--accent); color:var(--accent-ink); }
+  button.ghost { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  button:disabled { opacity:.6; cursor:wait; }
+  pre#out { margin:0; background:var(--out); color:var(--out-ink); border-radius:8px; padding:14px; min-height:90px; overflow:auto; white-space:pre-wrap; word-break:break-word; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre#out .err { color: var(--err); }
+  footer { color:var(--muted); font-size:.85rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pendataan Nilai Mahasiswa (C++)</h1>
+  <p class="sub">Tugas Algoritma dan Struktur Data, Pertemuan 7: Struktur Data Record. Ubah kode atau data, lalu klik Jalankan.</p>
+
+  <div class="card">
+    <label for="code">Kode C++</label>
+    <textarea id="code" spellcheck="false">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// Record Mahasiswa: 3 field dengan tipe berbeda
+struct Mahasiswa {
+  int nim;
+  string nama;
+  float nilai;
+};
+
+int main() {
+  Mahasiswa mhs[50];
+  int n;
+  cout &lt;&lt; "Jumlah mahasiswa: ";
+  cin &gt;&gt; n;
+
+  // 1. Input data
+  for (int i = 0; i &lt; n; i++) {
+    cout &lt;&lt; "Data ke-" &lt;&lt; i + 1 &lt;&lt; endl;
+    cout &lt;&lt; "NIM   : "; cin &gt;&gt; mhs[i].nim;
+    cout &lt;&lt; "Nama  : "; cin &gt;&gt; mhs[i].nama;
+    cout &lt;&lt; "Nilai : "; cin &gt;&gt; mhs[i].nilai;
+  }
+
+  // 2. Tampilkan data + status, sekalian jumlahkan nilai
+  float total = 0;
+  cout &lt;&lt; endl &lt;&lt; "=== Data Mahasiswa ===" &lt;&lt; endl;
+  for (int i = 0; i &lt; n; i++) {
+    total += mhs[i].nilai;
+    cout &lt;&lt; mhs[i].nim &lt;&lt; " " &lt;&lt; mhs[i].nama &lt;&lt; " " &lt;&lt; mhs[i].nilai;
+    if (mhs[i].nilai &gt;= 60)
+      cout &lt;&lt; " - lulus" &lt;&lt; endl;
+    else
+      cout &lt;&lt; " - tidak lulus" &lt;&lt; endl;
+  }
+
+  // 3. Cari nilai tertinggi
+  int maks = 0;  // simpan indeks mahasiswa dengan nilai tertinggi
+  for (int i = 1; i &lt; n; i++) {
+    if (mhs[i].nilai &gt; mhs[maks].nilai)
+      maks = i;
+  }
+  cout &lt;&lt; "Nilai tertinggi: " &lt;&lt; mhs[maks].nama
+       &lt;&lt; " (" &lt;&lt; mhs[maks].nilai &lt;&lt; ")" &lt;&lt; endl;
+
+  // 4. Rata-rata
+  cout &lt;&lt; "Rata-rata: " &lt;&lt; total / n &lt;&lt; endl;
+
+  return 0;
+}
+</textarea>
+  </div>
+
+  <div class="card">
+    <label for="stdin">Input data <span class="hint">(satu nilai per baris: jumlah mahasiswa, lalu nim, nama, nilai untuk tiap mahasiswa)</span></label>
+    <textarea id="stdin" spellcheck="false">3
+101
+Ayu
+85
+102
+Komang
+72
+103
+Wayan
+58
+</textarea>
+  </div>
+
+  <div class="row" style="margin-bottom:16px">
+    <button id="run">Jalankan</button>
+    <button id="reset" class="ghost" type="button">Kembalikan contoh</button>
+  </div>
+
+  <div class="card">
+    <label>Hasil</label>
+    <pre id="out" aria-live="polite">Klik "Jalankan" untuk melihat hasil.</pre>
+  </div>
+
+  <footer>
+    Kode di-compile dengan g++ di layanan <a href="https://wandbox.org" target="_blank" rel="noopener">Wandbox</a>.
+    Saat kamu klik Jalankan, kode dan input dikirim ke layanan itu. Jangan menulis data pribadi di sini.
+    Sumber: <a href="https://github.com/gungrsyworkakun-tech/complier" target="_blank" rel="noopener">GitHub</a>.
+  </footer>
+</main>
+
+<script>
+(function () {
+  var codeEl = document.getElementById('code');
+  var stdinEl = document.getElementById('stdin');
+  var outEl = document.getElementById('out');
+  var runBtn = document.getElementById('run');
+  var defaultCode = codeEl.value;
+  var defaultStdin = stdinEl.value;
+
+  function show(text, isError) {
+    outEl.textContent = '';
+    var span = document.createElement('span');
+    if (isError) span.className = 'err';
+    span.textContent = text;
+    outEl.appendChild(span);
+  }
+
+  document.getElementById('reset').addEventListener('click', function () {
+    codeEl.value = defaultCode;
+    stdinEl.value = defaultStdin;
+    show('Contoh dikembalikan. Klik "Jalankan".', false);
+  });
+
+  runBtn.addEventListener('click', function () {
+    runBtn.disabled = true;
+    runBtn.textContent = 'Menjalankan...';
+    show('Sedang compile dan menjalankan...', false);
+
+    fetch('https://wandbox.org/api/compile.json', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: codeEl.value,
+        compiler: 'gcc-head',
+        stdin: stdinEl.value,
+        options: 'warning',
+        save: false
+      })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Layanan compiler membalas dengan kode ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var compileErr = data.compiler_error || '';
+        var progOut = data.program_output || '';
+        var progErr = data.program_error || '';
+        if (data.status && data.status !== '0' && !progOut && compileErr) {
+          show('Compile gagal:\n' + compileErr, true);
+          return;
+        }
+        var text = progOut;
+        if (progErr) text += (text ? '\n' : '') + progErr;
+        if (!text) text = '(program tidak menghasilkan keluaran)';
+        show(text, false);
+      })
+      .catch(function (err) {
+        show('Gagal menghubungi layanan compiler: ' + err.message + '\nCoba lagi sebentar, atau pakai online compiler lain.', true);
+      })
+      .then(function () {
+        runBtn.disabled = false;
+        runBtn.textContent = 'Jalankan';
+      });
+  });
+})();
+</script>
+</body>
+</html>
