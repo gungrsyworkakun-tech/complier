@@ -1,0 +1,27 @@
+name: Compile dan Jalankan C++
+
+# Workflow ini jalan otomatis setiap kali kamu upload (push) kode ke GitHub.
+# Bisa juga dijalankan manual lewat tab Actions > Run workflow.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode dari repository
+        uses: actions/checkout@v4
+
+      - name: Compile program (g++)
+        run: g++ -Wall -o pendataan src/pendataan_mahasiswa.cpp
+
+      - name: Jalankan program dengan data contoh
+        run: ./pendataan < input_contoh.txt
+
+      - name: Simpan program hasil compile
+        uses: actions/upload-artifact@v4
+        with:
+          name: pendataan-linux
+          path: pendataan
